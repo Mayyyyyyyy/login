@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.ant-layout{
+  min-height: 100vh !important
+}
+
+.ant-layout-header{
+  color: white !important;
+  text-align: center;
+}
+
+.ant-layout-footer{
+  text-align: center;
+}
