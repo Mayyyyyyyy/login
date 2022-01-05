@@ -1,11 +1,16 @@
 /* eslint-disable */
 import React from "react";
 import { Form, Input, Button, Checkbox, Layout ,Card} from "antd";
+import { Link , Navigate } from "react-router-dom"
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { observer, inject } from "mobx-react"
 import Style from './components.less'
 import '../App.css'
+// import Loginpage from '../utils'
+import request from "../request"
 
 const { Header, Footer, Sider, Content } = Layout;
+
 
 class Log extends React.Component {
   constructor(props){
@@ -14,6 +19,11 @@ class Log extends React.Component {
       username:'',
       password:''
     }
+  }
+
+  componentDidMount(){
+    const {store} = this.props
+    console.log('store',store )
   }
 
   getInputValue = async(v,type)=>{
@@ -29,6 +39,23 @@ class Log extends React.Component {
           password:v.target.value
         })
         break
+    }
+  }
+
+  submitData = async()=>{
+    const {username,password} = this.state
+    let params={
+       username,
+       password
+    }
+    try{
+      let result = await request.post('/login',{...params})
+      console.log('result',result )
+      if(result.data.success){
+        <Navigate to="/home" />
+      }
+    }catch(err){
+       console.log('err', err)
     }
   }
   render() {
@@ -83,6 +110,7 @@ class Log extends React.Component {
                     type="primary"
                     htmlType="submit"
                     className="login-form-button"
+                    onClick={()=>this.submitData()}
                   >
                     Log in
                   </Button>
