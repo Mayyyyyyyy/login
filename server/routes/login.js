@@ -12,9 +12,12 @@ router.post('/login',async(req,res)=>{
    })
 })
 
-router.get('/home',async(req,res)=>{
-   res.send('welcome home')
+router.post('/register',async(req,res)=>{
+   request('http://localhost:5000',async()=>{
+     await loginService.userRegister(req,res)
+   })
 })
+
 
 module.exports = router
 

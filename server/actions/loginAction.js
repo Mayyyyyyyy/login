@@ -7,22 +7,55 @@ class LoginActions {
     console.log('req.query', req.query)
     console.log('req.params', req.params)
     console.log('req.body', req.body)
+    const {username,password} = req.body
     userModel.find({},(err,doc)=>{
       if(err){
         throw err
       }
-      // res.send(`${doc[0].password}`)
-      // console.log('res', res)
+      console.log('doc',doc )
+      let isSigned = doc.some(item=>item.username == username && item.password == password)
       res.json({
         // message: res.data.message,
         success: true,
-        results: doc[0].username
+        results: isSigned&&username
       })
-      // if( req.body.username === doc[0].username ){
-      //   res.redirect(302,`/home`)
-      // }
     })
- }
+   } 
+   userRegister(req,res){
+    console.log('req.body', req.body)
+    const {username,password} = req.body
+    userModel.find({},(err,doc)=>{
+      if(err){
+        throw err
+      }
+      console.log('doc',doc )
+      let isSigned = doc.some(item=>item.username == username && item.password == password)
+      if(isSigned){
+        res.json({
+          message: 'registed',
+          // success: true,
+          // results: isSigned&&username
+        }) 
+        return
+      }else{
+        let userModelInstance = new userModel({
+          username,
+          password
+        })
+        userModelInstance.save((err)=>{
+          if(err){
+            throw err
+          }
+          console.log('save successfully', )
+          res.json({
+            // message: res.data.message,
+            success: true,
+          })
+          return
+        })
+      }
+    })
+   }
 }
 
 module.exports = LoginActions

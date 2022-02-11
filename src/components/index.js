@@ -3,8 +3,8 @@ import React from "react";
 import { Form, Input, Button, Checkbox, Layout ,Card} from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { observer, inject } from "mobx-react"
-import Style from './components.less'
 import '../App.css'
+
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -16,11 +16,15 @@ class Home extends React.Component {
     this.state={
       
     }
+    console.log('props',props )
   }
 
   componentDidMount(){
     const {store} = this.props
-    console.log('store',store )
+    console.log('this.props', this.props?.location?.state)
+    console.log('window.location', window.location)
+    let user = window.localStorage.getItem('user')
+    console.log('user', user)
   }
 
   render() {
@@ -29,7 +33,7 @@ class Home extends React.Component {
         <Layout >
           <Header>Todo</Header>
           <Content>
-            <Card className={Style.form}>
+            <Card >
                <p>Welcome,blablabla</p>
              </Card>
           </Content>
